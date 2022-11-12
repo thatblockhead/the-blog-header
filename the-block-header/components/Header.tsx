@@ -1,11 +1,14 @@
 import React from 'react'
+import Image from 'next/image'
+import banner from '../public/images/banner.png'
 
 export default function Header() {
   return (
-    <header>
-        <div className="container">
-            <h2>The Block Header</h2>
-        </div>
-    </header>
+    <div className="banner">
+      <Image
+      src={banner}
+      alt="The Block Header"
+      />
+    </div>
   )
 }

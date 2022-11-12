@@ -19,16 +19,10 @@ export default function Home({posts}: HomeProps) {
   })
 
   return (
-    <div>
-      <Head>
-        <title>The Block Header</title>
-      </Head>
-      
+    <div>      
       <div className="posts">
         {postsMap}
-      </div>
-
-      
+      </div>      
     </div>
   )
 }

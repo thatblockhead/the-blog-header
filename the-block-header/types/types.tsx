@@ -17,7 +17,7 @@ export type HomeProps = {
 
 export interface PostProps {
     code: string
-    metadata: any
+    frontmatter: any
 }
 
 export interface Params {

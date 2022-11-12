@@ -1,12 +1,23 @@
 import fs from 'fs'
 import { bundleMDX } from 'mdx-bundler'
+import { getMDXComponent } from 'mdx-bundler/client'
 import { useMemo } from 'react'
-import { Params } from '../../types/types'
+import { Params, PostProps } from '../../types/types'
 
-// export default function PostPage({ code, metadata }: PostProps) {
-//     const Component = useMemo(() => getMDXComponent(code), [code])
-//     return <Component />
-// }
+export default function PostPage({ code, frontmatter }: PostProps) {
+    const Component = useMemo(() => getMDXComponent(code), [code])
+    return (
+        <>
+        <h2>{frontmatter.title}</h2>
+        <p>{frontmatter.description}</p>
+        <p>{frontmatter.date}</p>
+        <article>
+            <Component />
+        </article>
+        </>
+    
+    )
+}
 
 export async function getStaticPaths() {
     const filenames: string[] = fs.readdirSync(`${process.cwd()}/posts`)
@@ -30,11 +41,11 @@ export async function getStaticProps({ params }: Params) {
 
     const postPath = `${process.cwd()}/posts/${slug}.mdx`
     const markdown = await bundleMDX({ file: postPath })
-    const { code, frontmatter: metadata } = markdown
+    const { code, frontmatter } = markdown
 
     return { props: {
         code,
-        metadata
+        frontmatter
         }
     }
 }
