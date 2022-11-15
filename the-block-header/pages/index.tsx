@@ -1,32 +1,29 @@
-import Head from 'next/head'
 import fs from 'fs'
 import matter from 'gray-matter'
 import { Post, HomeProps } from '../types/types'
-import Link from 'next/link'
+import PostCard from '../components/PostCard'
+import React from 'react'
 
 export default function Home({posts}: HomeProps) {
+  // Iterate through each post and render a preview card
   const postsMap = posts.map((post, idx) => {
-    return (
-      // turn this into separate Post component
-      <Link href={`/posts/${post.slug}`} key={idx} passHref={true}>
-        <div>
-          <h3>{post.frontmatter.title}</h3>
-          <p>{post.frontmatter.description}</p>
-          <p>{post.frontmatter.date}</p>
-        </div>
-      </Link>
+    return (  
+      <React.Fragment key={idx}>
+        <PostCard {...post} />
+      </React.Fragment>
     )
   })
 
-  return (
-    <div>      
-      <div className="posts">
-        {postsMap}
-      </div>      
-    </div>
+  // Render all preview cards in main content section
+  return (    
+    <>
+      <h1>Recent Posts</h1>
+      {postsMap}
+    </>
   )
 }
 
+// Retrieve posts data from posts directory to use as Home component props
 export async function getStaticProps() {
   const postFiles = fs.readdirSync(`${process.cwd()}/posts`)
 
